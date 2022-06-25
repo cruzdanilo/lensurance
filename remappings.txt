@@ -1,0 +1,4 @@
+forge-std/=lib/forge-std/src/
+lens-protocol/=lib/lens-protocol/contracts/
+@openzeppelin/=lib/openzeppelin-contracts/
+solmate/=lib/solmate/src/

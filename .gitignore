@@ -1,0 +1,10 @@
+.*-version*
+.DS_Store
+.env
+.vscode/
+*.code-workspace
+*.log
+/cache/
+/out/
+node_modules/
+package-lock.json
