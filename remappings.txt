@@ -2,4 +2,5 @@ forge-std/=lib/forge-std/src/
 aave-v3/=lib/aave-v3-core/contracts/
 lens-protocol/=lib/lens-protocol/contracts/
 @openzeppelin/=lib/openzeppelin-contracts/
+world-id/=lib/world-id-contracts/src/
 solmate/=lib/solmate/src/
