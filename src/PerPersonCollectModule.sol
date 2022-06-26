@@ -2,16 +2,21 @@
 pragma solidity 0.8.10;
 
 import { IWorldID } from "world-id/interfaces/IWorldID.sol";
-import { ByteHasher } from "world-id/libraries/ByteHasher.sol";
+import { ByteHasher } from "world-id/helpers/ByteHasher.sol";
 import { ModuleBase } from "lens-protocol/core/modules/ModuleBase.sol";
 import { ICollectModule } from "lens-protocol/interfaces/ICollectModule.sol";
 import { FollowValidationModuleBase } from "lens-protocol/core/modules/FollowValidationModuleBase.sol";
+import { console2 } from "forge-std/console2.sol";
 
 contract PerPersonCollectModule is FollowValidationModuleBase, ICollectModule {
   using ByteHasher for bytes;
 
+  error InvalidNullifier();
+
   IWorldID public immutable worldId;
   uint256 public immutable groupId;
+
+  mapping(uint256 => bool) internal nullifierHashes;
 
   constructor(
     address hub,
@@ -40,16 +45,21 @@ contract PerPersonCollectModule is FollowValidationModuleBase, ICollectModule {
     uint256 profileId,
     uint256 pubId,
     bytes calldata data
-  ) external view override {
+  ) external override {
     if (followerOnlyPublications[profileId][pubId]) _checkFollowValidity(profileId, collector);
-    (uint256 root, uint256[8] memory proof) = abi.decode(data, (uint256, uint256[8]));
+    (uint256 root, uint256 nullifierHash, uint256[8] memory proof) = abi.decode(data, (uint256, uint256, uint256[8]));
+
+    if (nullifierHashes[nullifierHash]) revert InvalidNullifier();
+
     worldId.verifyProof(
       root,
       groupId,
       abi.encodePacked(collector).hashToField(),
-      abi.encodePacked(profileId, pubId).hashToField(),
-      abi.encodePacked(address(this)).hashToField(),
+      nullifierHash,
+      abi.encodePacked(address(bytes20(keccak256(abi.encodePacked(profileId, pubId))))).hashToField(),
       proof
     );
+
+    nullifierHashes[nullifierHash] = true;
   }
 }
