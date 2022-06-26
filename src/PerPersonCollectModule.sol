@@ -6,7 +6,6 @@ import { ByteHasher } from "world-id/helpers/ByteHasher.sol";
 import { ModuleBase } from "lens-protocol/core/modules/ModuleBase.sol";
 import { ICollectModule } from "lens-protocol/interfaces/ICollectModule.sol";
 import { FollowValidationModuleBase } from "lens-protocol/core/modules/FollowValidationModuleBase.sol";
-import { console2 } from "forge-std/console2.sol";
 
 contract PerPersonCollectModule is FollowValidationModuleBase, ICollectModule {
   using ByteHasher for bytes;

@@ -4,6 +4,7 @@
     "lint:solhint": "solhint '{src,test}/**/*.sol'",
     "lint:slither": "slither src --solc-remaps \"$(xargs < remappings.txt)\"",
     "test": "forge test",
+    "coverage": "forge snapshot",
     "postinstall": "forge build && node scripts/postbuild.mjs"
   },
   "devDependencies": {

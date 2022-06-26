@@ -14,9 +14,6 @@
 [submodule "lib/aave-v3-core"]
 	path = lib/aave-v3-core
 	url = https://github.com/aave/aave-v3-core
-[submodule "lib/world-id-contracts"]
-	path = lib/world-id-contracts
-	url = https://github.com/worldcoin/world-id-contracts
 [submodule "lib/world-id-starter"]
 	path = lib/world-id-starter
 	url = https://github.com/worldcoin/world-id-starter
